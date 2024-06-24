@@ -3,9 +3,10 @@ require_once 'core/Controller.php';
 require_once 'core/Database.php';
 
 
-$url = isset($_GET['url']) ? explode('/', rtrim($_GET['url'], '/')) : null;
+$url = isset($_GET['url']) ? explode('/', rtrim($_GET['url'], '/')) : [];
 $controllerName = $url[0] ?? 'home';
 $methodName = $url[1] ?? 'index';
+
 $params = array_slice($url, 2);
 
 $controllerPath = 'controllers/' . ucfirst($controllerName) . 'Controller.php';
@@ -19,6 +20,9 @@ if (file_exists($controllerPath)) {
         echo 'Method not found';
     }
 } else {
-    echo 'Controller not found';
+    //  show 404 page
+    $controller = new Controller();
+    $controller->view('404');
+
 }
 
